@@ -8,6 +8,11 @@
 (setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
+;; install MELPA repository
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+
 (require 'general)
 ;(require 'setup-editor)
 ;(require 'setup-ido)
