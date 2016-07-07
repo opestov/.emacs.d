@@ -39,14 +39,14 @@
 ;; answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; in readline C-w kills the word behind point,
+;; C-w kills the word behind point (like in readline)
 (defun kill-region-or-backward-word ()
     "If the region is active and non-empty, call `kill-region'. Otherwise, call `backward-kill-word'."
     (interactive)
     (call-interactively
      (if (use-region-p) 'kill-region 'backward-kill-word)))
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
-;; use shell-like backspace C-h
+;; C-h is backspace (like in readline)
 (define-key key-translation-map [?\C-h] [?\C-?])
 ;; press f1 to get help
 (global-set-key (kbd "<f1>") 'help-command)
