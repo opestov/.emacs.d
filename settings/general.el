@@ -1,12 +1,15 @@
 ;; no splash screen please
 (setq inhibit-startup-message t)
 
-;; keyboard is my default choice
+;; remove distractions
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; 80 chars is a good width.
+;; use unicode by default
+(set-language-environment 'utf-8)
+
+;; 80 chars is a good width
 (setq-default fill-column 80)
 ;; don't break lines
 (setq-default truncate-lines t)
@@ -15,9 +18,7 @@
 (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 ;; by default do not use tab for indentation
 (setq tab-always-indent nil)
-;; and use tab to move between tab stops
-(global-set-key (kbd "<tab>") 'tab-to-tab-stop)
-;; default tab width
+;; place tab stops on even columns
 (set-default 'tab-width 2)
 
 ;; show empty lines after buffer end
