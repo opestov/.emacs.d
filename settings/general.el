@@ -18,6 +18,8 @@
 (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 ;; by default do not use tab for indentation
 (setq tab-always-indent nil)
+;; make sure that tab-to-tab-stop also use spaces
+(set-default 'indent-tabs-mode nil)
 ;; place tab stops on even columns
 (set-default 'tab-width 2)
 
@@ -40,11 +42,10 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; C-w kills the word behind point (like in readline)
+;; If the region is active and non-empty, call `kill-region'
 (defun kill-region-or-backward-word ()
-    "If the region is active and non-empty, call `kill-region'. Otherwise, call `backward-kill-word'."
-    (interactive)
-    (call-interactively
-     (if (use-region-p) 'kill-region 'backward-kill-word)))
+  (interactive)
+  (call-interactively (if (use-region-p) 'kill-region 'backward-kill-word)))
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
 ;; C-h is backspace (like in readline)
 (define-key key-translation-map [?\C-h] [?\C-?])
@@ -56,11 +57,11 @@
 (require 'quail)
 (add-to-list 'quail-keyboard-layout-alist
              `("dvorak" . ,(concat "                              "
-				   "  1!2@3#4$5%6^7&8*9(0)[{]}`~  "
-				   "  '\",<.>pPyYfFgGcCrRlL/?=+    "
-				   "  aAoOeEuUiIdDhHtTnNsS-_\\|    "
-				   "  ;:qQjJkKxXbBmMwWvVzZ        "
-				   "                              ")))
+           "  1!2@3#4$5%6^7&8*9(0)[{]}`~  "
+           "  '\",<.>pPyYfFgGcCrRlL/?=+    "
+           "  aAoOeEuUiIdDhHtTnNsS-_\\|    "
+           "  ;:qQjJkKxXbBmMwWvVzZ        "
+           "                              ")))
 (quail-set-keyboard-layout "dvorak")
 
 ;; disable bell
@@ -76,14 +77,16 @@
 ;; prevent the creation of lock files: Interlocking.html#Interlocking
 (setq create-lockfiles nil)
 
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
-(setq make-backup-files t               ; backup of a file the first time it is saved.
-      backup-by-copying t               ; don't clobber symlinks
-      version-control t                 ; version numbers for backup files
-      delete-old-versions t             ; delete excess backup files silently
-      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
-      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
-      vc-make-backup-files t)
+(setq backup-directory-alist
+  `(("." . ,(concat user-emacs-directory "backups"))))
+(setq
+  make-backup-files t   ; backup of a file the first time it is saved.
+  backup-by-copying t   ; don't clobber symlinks
+  version-control t     ; version numbers for backup files
+  delete-old-versions t ; delete excess backup files silently
+  kept-old-versions 6   ; oldest versions to keep when a new numbered backup is made (default: 2)
+  kept-new-versions 9   ; newest versions to keep when a new numbered backup is made (default: 2)
+  vc-make-backup-files t)
 (setq delete-by-moving-to-trash t)
 (setq echo-keystrokes 0.1)
 
